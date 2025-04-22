@@ -1,0 +1,107 @@
+{
+   "Version" : 0.2,
+   "ModuleName" : "epj2make",
+   "Options" : {
+      "Warnings" : "All",
+      "TargetType" : "Executable",
+      "TargetFileName" : "epj2make",
+      "Libraries" : [
+         "ecrt"
+      ],
+      "Console" : true
+   },
+   "Platforms" : [
+      {
+         "Name" : "Linux",
+         "Options" : {
+            "PreprocessorDefinitions" : [
+
+            ]
+         }
+      }
+   ],
+   "Configurations" : [
+      {
+         "Name" : "Debug",
+         "Options" : {
+            "Debug" : true,
+            "Optimization" : "None",
+            "PreprocessorDefinitions" : [
+               "_DEBUG"
+            ],
+            "FastMath" : false
+         },
+         "Platforms" : [
+            {
+               "Name" : "Linux",
+               "Options" : {
+                  "PreprocessorDefinitions" : [
+
+                  ]
+               }
+            }
+         ]
+      },
+      {
+         "Name" : "Release",
+         "Options" : {
+            "Warnings" : "None",
+            "Debug" : false,
+            "NoLineNumbers" : true,
+            "Optimization" : "Speed",
+            "LibraryDirs" : [
+               "../obj/$(PLATFORM)/bin",
+               "../obj/$(PLATFORM)/lib"
+            ],
+            "FastMath" : true,
+            "PostbuildCommands" : [
+               "$(call cp,$(TARGET),../obj/$(PLATFORM)/bin/)"
+            ],
+            "InstallCommands" : [
+               "$(if $(WINDOWS_HOST),$(call cp,$(TARGET),\"$(BINDIR)/\"),install $(INSTALL_FLAGS) $(TARGET) $(BINDIR)/$(MODULE)$(E))"
+            ]
+         }
+      },
+      {
+         "Name" : "MemoryGuard",
+         "Options" : {
+            "Debug" : true,
+            "MemoryGuard" : true,
+            "Optimization" : "None",
+            "FastMath" : false
+         }
+      }
+   ],
+   "Files" : [
+      {
+         "Folder" : "project",
+         "Files" : [
+            "Project.ec",
+            "ProjectConfig.ec",
+            "ProjectNode.ec"
+         ]
+      },
+      {
+         "Folder" : "settings",
+         "Files" : [
+            "CompilerSettings.ec",
+            "CompilerConfig.ec",
+            "configFiles.ec"
+         ]
+      },
+      "epj2make.ec"
+   ],
+   "ResourcesPath" : "",
+   "Resources" : [
+      {
+         "Folder" : "locale",
+         "Files" : [
+            "es.mo",
+            "he.mo",
+            "ru.mo",
+            "zh_CN.mo"
+         ]
+      },
+      "../crossplatform.mk"
+   ]
+}
