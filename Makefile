@@ -118,6 +118,12 @@ ifdef LINUX_TARGET
 
 endif
 
+ifndef WINDOWS_TARGET
+ifndef MANDIR
+export MANDIR=$(DESTDIR)$(prefix)/share/man
+endif
+endif
+
 CECFLAGS += -cpp $(_CPP)
 
 OFLAGS += \
@@ -168,6 +174,10 @@ endif
 
 install:
 	$(if $(WINDOWS_HOST),$(call cp,$(TARGET),"$(BINDIR)/"),install $(INSTALL_FLAGS) $(TARGET) $(BINDIR)/$(MODULE)$(E))
+ifndef WINDOWS_TARGET
+	mkdir -p $(MANDIR)/man1
+	$(call cpr,share/man/man1,$(MANDIR)/man1)
+endif
 
 # SYMBOL RULES
 
