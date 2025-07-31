@@ -309,9 +309,9 @@ class epj2makeApp : /*Gui*/ Application
                   defaultCompiler.earCommand = optionsCompiler.earCommand;
                // TODO: Pass/combine/override the include and library dirs
                for(dir : optionsCompiler.includeDirs)
-                  defaultCompiler.includeDirs.Add(dir);
+                  defaultCompiler.includeDirs.Add(CopyString(dir));
                for(dir : optionsCompiler.libraryDirs)
-                  defaultCompiler.libraryDirs.Add(dir);
+                  defaultCompiler.libraryDirs.Add(CopyString(dir));
                delete optionsCompiler;
 
                project = LoadProject(epjPath, null);

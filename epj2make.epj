@@ -102,6 +102,6 @@
             "zh_CN.mo"
          ]
       },
-      "../crossplatform.mk"
+      "$(EC_SDK_SRC)/crossplatform.mk"
    ]
 }
