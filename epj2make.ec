@@ -191,7 +191,6 @@ class epj2makeApp : Application
             if(!strcmp(extension, ProjectExtension))
             {
                if(noGlobalSettings)
-               if(noGlobalSettings)
             {
                printf("DEBUG 1: noGlobalSettings is true, using default compiler\n");
                defaultCompiler = MakeDefaultCompiler("Default", true);
