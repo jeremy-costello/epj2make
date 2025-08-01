@@ -191,20 +191,34 @@ class epj2makeApp : Application
             if(!strcmp(extension, ProjectExtension))
             {
                if(noGlobalSettings)
-               {
-                  printf("DEBUG: Creating default compiler (noGlobalSettings)\n");
-                  defaultCompiler = MakeDefaultCompiler("Default", true);
-               }
-               else
-               {
-                  const char * compiler = getenv("COMPILER");
-                  if(!compiler) compiler = "Default";
-                  printf("DEBUG: COMPILER = %s\n", compiler);
-                  settingsContainer.Load();
-                  compilerConfig.compilers.read(settingsContainer);
-                  delete settingsContainer;
-                  defaultCompiler = compilerConfig.compilers.GetCompilerConfig(compiler);
-               }
+               if(noGlobalSettings)
+            {
+               printf("DEBUG 1: noGlobalSettings is true, using default compiler\n");
+               defaultCompiler = MakeDefaultCompiler("Default", true);
+            }
+            else
+            {
+               printf("DEBUG 2: noGlobalSettings is false, attempting to load global compiler settings\n");
+
+               const char * compiler = getenv("COMPILER");
+               printf("DEBUG 3: getenv(\"COMPILER\") returned: %s\n", compiler ? compiler : "(null)");
+               if(!compiler) compiler = "Default";
+
+               printf("DEBUG 4: Calling settingsContainer.Load()\n");
+               settingsContainer.Load();
+               printf("DEBUG 5: settingsContainer.Load() completed\n");
+
+               printf("DEBUG 6: Reading compilers from settingsContainer\n");
+               compilerConfig.compilers.read(settingsContainer);
+               printf("DEBUG 7: compilers read successfully\n");
+
+               delete settingsContainer;
+               printf("DEBUG 8: settingsContainer deleted\n");
+
+               printf("DEBUG 9: Getting compiler config for: %s\n", compiler);
+               defaultCompiler = compilerConfig.compilers.GetCompilerConfig(compiler);
+               printf("DEBUG 10: defaultCompiler = %p\n", defaultCompiler);
+            }
 
                if(optionsCompiler.makeCommand) defaultCompiler.makeCommand = optionsCompiler.makeCommand;
                if(optionsCompiler.cppCommand) defaultCompiler.cppCommand = optionsCompiler.cppCommand;
